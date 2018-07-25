@@ -5,6 +5,7 @@ import org.bob.spring.elasticsearch.example.model.User;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -26,5 +27,11 @@ public class UserDataController {
         List<User> target = new ArrayList<>();
         userRepository.findAll().forEach(target::add);
         return target;
+    }
+
+    @RequestMapping("/user/save")
+    public User save(@RequestBody User user) {
+        log.info("adding a new user: {}", user.toString());
+        return userRepository.save(user);
     }
 }
